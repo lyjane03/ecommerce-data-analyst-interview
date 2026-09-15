@@ -582,6 +582,52 @@ body {
   margin-bottom: 1rem;
 }
 
+/* ===== 电商案例分析与来源 ===== */
+.source-strip {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  margin: 0 0 1rem;
+  color: var(--gray-600);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.source-strip a { color: var(--blue); text-decoration: none; margin-left: 0.25rem; }
+.source-strip a:hover { text-decoration: underline; }
+.writing-panel {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.writing-panel-title { padding: 0.85rem 1.1rem; color: var(--gray-800); font-weight: 700; border-bottom: 1px solid var(--gray-100); }
+.writing-panel-body { padding: 1rem 1.1rem; color: var(--gray-700); line-height: 1.75; }
+.writing-panel-body p { margin: 0; }
+.data-context {
+  white-space: pre-wrap;
+  font: inherit;
+  line-height: 1.7;
+  margin: 0;
+  color: var(--gray-700);
+}
+.rubric-list { display: grid; gap: 0.75rem; }
+.rubric-item {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+.rubric-head { display: flex; justify-content: space-between; color: var(--gray-800); margin-bottom: 0.35rem; }
+.rubric-head span { color: var(--blue); font-weight: 700; }
+.rubric-question { color: var(--gray-700); font-size: 0.9rem; }
+.rubric-hint { color: var(--gray-500); font-size: 0.82rem; margin-top: 0.25rem; }
+.rating-buttons { display: flex; gap: 0.45rem; margin-top: 0.75rem; }
+.rating-btn { width: 2rem; height: 2rem; border: 1px solid var(--gray-300); border-radius: 50%; background: #fff; color: var(--gray-600); cursor: pointer; font-weight: 600; }
+.rating-btn:hover, .rating-btn.active { border-color: var(--blue); background: var(--blue); color: #fff; }
+.rubric-total { margin-top: 1rem; padding: 0.85rem 1rem; background: var(--blue-light); border-radius: var(--radius-sm); color: var(--blue-dark); font-weight: 700; }
+
 /* ===== 听力页面 ===== */
 .tts-controls {
   display: flex;

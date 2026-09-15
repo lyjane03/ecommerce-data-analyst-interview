@@ -37,7 +37,7 @@ var PageSettings = (function () {
           '</div>' +
           '<div class="backup-card">' +
             '<div class="backup-title">导入数据</div>' +
-            '<div class="backup-desc">从之前导出的 JSON 文件恢复所有学习数据（会覆盖当前数据）。</div>' +
+          '<div class="backup-desc">从本版本导出的 JSON 文件恢复学习进度（会覆盖当前数据）。其他版本的文件会被拒绝。</div>' +
             '<input type="file" id="importFile" accept=".json" style="display:none" onchange="PageSettings.importData(this)">' +
             '<button class="btn btn-secondary" onclick="document.getElementById(\'importFile\').click()">📥 导入 JSON 文件</button>' +
           '</div>' +
@@ -82,7 +82,7 @@ var PageSettings = (function () {
         '</div>' +
         '<div class="setting-row">' +
           '<label class="setting-label">测试语音</label>' +
-          '<button class="btn btn-secondary btn-sm" onclick="AppTTS.speak(\'Hello, I am ready for the Danone Brand Manager interview. My name is Li Wei and I have seven years of experience in the beverage industry.\')">▶ 试听英文 TTS</button>' +
+          '<button class="btn btn-secondary btn-sm" onclick="AppTTS.speak(\'I am an e-commerce data analyst. I turn customer and order data into clear business decisions.\')">▶ 试听英文 TTS</button>' +
         '</div>' +
       '</div>' +
 
@@ -98,7 +98,7 @@ var PageSettings = (function () {
       '</div>' +
 
       '<div class="settings-footer">' +
-        '<div class="footer-info">脉动品牌经理英语面试训练 · 数据存储于本地浏览器 · 不上传任何服务器</div>' +
+        '<div class="footer-info">E-commerce Data Analyst 英语面试训练 · 数据存储于本地浏览器 · 不上传任何服务器</div>' +
       '</div>' +
     '</div>';
   }

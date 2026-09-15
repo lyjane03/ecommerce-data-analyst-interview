@@ -142,7 +142,7 @@ var PageOverview = (function () {
       '<div class="ov-theme-en">' + d.theme + '</div>' +
       '<div class="ov-modules">' +
         renderModule('🎧', '听力训练', d.listening ? d.listening.title : '—', progress[d.day] && progress[d.day].listening) +
-        renderModule('✍️', '写作训练', d.writing ? d.writing.title : '—', progress[d.day] && progress[d.day].writing) +
+        renderModule('✍️', '案例分析', d.writing ? d.writing.title : '—', progress[d.day] && progress[d.day].writing) +
         renderModule('🎙️', '口语训练', d.speaking ? d.speaking.title : '—', progress[d.day] && progress[d.day].speaking) +
         renderModule('📝', '每日测验', getQuizSummary(d), progress[d.day] && progress[d.day].quiz) +
       '</div>' +

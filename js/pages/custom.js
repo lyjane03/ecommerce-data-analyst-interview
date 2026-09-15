@@ -31,7 +31,7 @@ var PageCustom = (function () {
   function render() {
     return '<div class="page-custom">' +
       '<h2 class="page-title">我的素材库</h2>' +
-      '<p class="page-desc">添加你的营销案例和方法论，支持中英文输入，系统可自动翻译为英文并生成口语练习。</p>' +
+      '<p class="page-desc">添加你的电商分析案例和分析框架，支持中英文输入，系统可自动翻译为英文并生成口语练习。</p>' +
       '<div class="tab-bar">' +
         tabBtn('cases', '📁 我的案例', state.tab) +
         tabBtn('methodologies', '📚 我的方法论', state.tab) +
@@ -61,7 +61,7 @@ var PageCustom = (function () {
 
     return '<div class="custom-section">' +
       '<div class="custom-header">' +
-        '<div class="custom-hint">添加你的真实营销案例素材，支持中文/英文/中英混合输入。</div>' +
+        '<div class="custom-hint">添加你的真实电商分析案例素材，支持中文/英文/中英混合输入。</div>' +
         '<button class="btn btn-primary" onclick="PageCustom.newCase()">+ 新增案例</button>' +
       '</div>' +
       (state.editingCase !== null ? renderCaseForm(cases) : '') +
@@ -70,7 +70,7 @@ var PageCustom = (function () {
         '<div class="empty-state">' +
           '<div class="empty-icon">📁</div>' +
           '<div class="empty-text">还没有案例素材</div>' +
-          '<div class="empty-hint">点击"新增案例"添加你的第一个营销案例</div>' +
+          '<div class="empty-hint">点击"新增案例"添加你的第一个电商分析案例</div>' +
         '</div>' :
         '<div class="cards-grid">' +
           cases.map(function (c, i) { return renderCaseCard(c, i); }).join('') +
@@ -78,7 +78,7 @@ var PageCustom = (function () {
       '<div class="template-guide">' +
         '<div class="guide-title">💡 案例结构建议（STAR 法则）</div>' +
         '<ul class="guide-list">' +
-          '<li><strong>Situation：</strong>市场背景、品牌挑战、时间节点</li>' +
+          '<li><strong>Situation：</strong>业务背景、数据现象、时间节点</li>' +
           '<li><strong>Task：</strong>你的具体职责和目标</li>' +
           '<li><strong>Action：</strong>你采取的 3 个关键行动（越具体越好）</li>' +
           '<li><strong>Result：</strong>可量化的成果（% 增长、绝对值、时间节点）</li>' +
@@ -101,13 +101,13 @@ var PageCustom = (function () {
     return '<div class="edit-form-overlay">' +
       '<div class="edit-form">' +
         '<div class="form-title">' + (isNew ? '新增案例' : '编辑案例') + '</div>' +
-        formField('案例名称', 'caseTitle', titleVal, '例如：脉动夏季营销活动案例 2023') +
-        formField('一句话场景描述（中文/英文均可）', 'caseScenario', rawVal('scenario'), '例如：2023年Q2针对Z世代消费者的品牌重新定位项目') +
-        formTextarea('Situation — 情况背景（中文/英文均可）', 'caseSituation', rawVal('situation'), '描述市场环境、品牌挑战和你的角色...\n例如：脉动在年轻消费群体中的品牌认知度持续下降，连续三年销量走低。') +
-        formTextarea('Task — 任务目标（中文/英文均可）', 'caseTask', rawVal('task'), '描述你的具体职责和目标...\n例如：我的目标是扭转品牌下滑趋势，在6个月内实现销量正增长。') +
-        formTextarea('Action — 关键行动（中文/英文均可）', 'caseAction', rawVal('action'), '描述你采取的关键行动...\n例如：\n1. 我主导了消费者调研，发现健康意识是关键驱动因素\n2. 我们重新设计了产品包装和传播策略\n3. 我联合数字团队发起了社交媒体营销活动') +
-        formTextarea('Result — 成果数据（中文/英文均可）', 'caseResult', rawVal('result'), '描述可量化的成果...\n例如：品牌知名度提升了15%，销量在6个月内增长了23%，市场份额从12%提升到15%。') +
-        formField('关键词（中文/英文均可，逗号分隔）', 'caseKeywords', kwVal, '例如：品牌重新定位, 消费者洞察, 数字营销') +
+        formField('案例名称', 'caseTitle', titleVal, '例如：夏季电商促销诊断案例 2026') +
+        formField('一句话场景描述（中文/英文均可）', 'caseScenario', rawVal('scenario'), '例如：大促期间移动端结账转化下降的诊断项目') +
+        formTextarea('Situation — 情况背景（中文/英文均可）', 'caseSituation', rawVal('situation'), '描述业务环境、数据现象和你的角色...\n例如：移动端结账转化下降，运营需要在大促前定位原因。') +
+        formTextarea('Task — 任务目标（中文/英文均可）', 'caseTask', rawVal('task'), '描述你的具体职责和目标...\n例如：我的目标是在大促前定位收入下滑的根因。') +
+        formTextarea('Action — 关键行动（中文/英文均可）', 'caseAction', rawVal('action'), '描述你采取的关键行动...\n例如：\n1. 按设备和 SKU 拆解漏斗\n2. 检查支付日志与埋点完整性\n3. 与运营确认库存和履约约束') +
+        formTextarea('Result — 成果数据（中文/英文均可）', 'caseResult', rawVal('result'), '描述可量化的成果...\n例如：修复后结账完成率提升 0.8 个百分点，退款率保持稳定。') +
+        formField('关键词（中文/英文均可，逗号分隔）', 'caseKeywords', kwVal, '例如：conversion funnel, stockout, payment error') +
         '<div class="form-actions">' +
           '<button class="btn btn-primary" onclick="PageCustom.saveCase(\'' + (isNew ? 'new' : state.editingCase) + '\')">保存原文</button>' +
           '<button class="btn btn-translate' + (state.translating ? ' loading' : '') + '" onclick="PageCustom.translateAndSaveCase(\'' + (isNew ? 'new' : state.editingCase) + '\')"' +
@@ -147,7 +147,7 @@ var PageCustom = (function () {
 
     return '<div class="custom-section">' +
       '<div class="custom-header">' +
-        '<div class="custom-hint">整理你掌握的营销方法论框架，支持中文/英文/中英混合输入。</div>' +
+        '<div class="custom-hint">整理你掌握的电商分析框架，支持中文/英文/中英混合输入。</div>' +
         '<button class="btn btn-primary" onclick="PageCustom.newMethod()">+ 新增方法论</button>' +
       '</div>' +
       (state.editingMethod !== null ? renderMethodForm(methods) : '') +
@@ -156,20 +156,20 @@ var PageCustom = (function () {
         '<div class="empty-state">' +
           '<div class="empty-icon">📚</div>' +
           '<div class="empty-text">还没有方法论要点</div>' +
-          '<div class="empty-hint">点击"新增方法论"添加你掌握的营销框架</div>' +
+          '<div class="empty-hint">点击"新增方法论"添加你掌握的分析框架</div>' +
         '</div>' :
         '<div class="cards-grid">' +
           methods.map(function (m, i) { return renderMethodCard(m, i); }).join('') +
         '</div>') +
       '<div class="template-guide">' +
-        '<div class="guide-title">💡 常用营销方法论参考</div>' +
+        '<div class="guide-title">💡 常用电商分析框架参考</div>' +
         '<ul class="guide-list">' +
-          '<li>4P Framework (Product, Price, Place, Promotion)</li>' +
-          '<li>Brand Positioning Statement Template</li>' +
-          '<li>Consumer Journey Mapping</li>' +
-          '<li>STAR Storytelling Method</li>' +
-          '<li>SCR Presentation Framework (Situation, Complication, Resolution)</li>' +
-          '<li>Long and Short of It — Brand vs. Activation Investment</li>' +
+          '<li>KPI Tree: Goal → Driver → Diagnostic Cut</li>' +
+          '<li>Funnel Decomposition: View → Cart → Checkout → Purchase</li>' +
+          '<li>STAR Storytelling for an analytics project</li>' +
+          '<li>Experiment Readout: Design → Result → Guardrail → Decision</li>' +
+          '<li>SCR Presentation Framework for a business diagnosis</li>' +
+          '<li>Root Cause Tree: Demand, Conversion, Supply, Data</li>' +
         '</ul>' +
       '</div>' +
     '</div>';
@@ -186,9 +186,9 @@ var PageCustom = (function () {
     return '<div class="edit-form-overlay">' +
       '<div class="edit-form">' +
         '<div class="form-title">' + (isNew ? '新增方法论' : '编辑方法论') + '</div>' +
-        formField('方法论名称', 'methodTitle', titleVal, '例如：4P 营销组合框架') +
-        formField('一句话描述（中文/英文均可）', 'methodSummary', summaryVal, '例如：通过四个维度分析品牌战略的框架...') +
-        formTextarea('核心要点（中文/英文均可，每行一条）', 'methodPoints', pointsVal, '例如：\n产品：定义核心产品和差异化优势\n价格：设定反映品牌定位的价格策略\n渠道：选择最佳分销渠道\n推广：制定整合营销传播方案') +
+        formField('方法论名称', 'methodTitle', titleVal, '例如：Revenue Gap KPI Tree') +
+        formField('一句话描述（中文/英文均可）', 'methodSummary', summaryVal, '例如：从收入目标逐层拆解到可验证驱动因素...') +
+        formTextarea('核心要点（中文/英文均可，每行一条）', 'methodPoints', pointsVal, '例如：\n目标：明确决策和时间范围\n口径：写清 grain、分母和状态\n诊断：按设备、渠道、SKU 切分\n行动：给出 owner、deadline 和 guardrail') +
         '<div class="form-actions">' +
           '<button class="btn btn-primary" onclick="PageCustom.saveMethod(\'' + (isNew ? 'new' : state.editingMethod) + '\')">保存原文</button>' +
           '<button class="btn btn-translate' + (state.translating ? ' loading' : '') + '" onclick="PageCustom.translateAndSaveMethod(\'' + (isNew ? 'new' : state.editingMethod) + '\')"' +

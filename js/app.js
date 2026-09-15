@@ -6,7 +6,7 @@ var App = (function () {
     dashboard: { label: '进度看板', icon: '📊', module: 'PageDashboard' },
     today:     { label: '今日训练', icon: '🗓️', module: 'PageToday' },
     listening: { label: '听力训练', icon: '🎧', module: 'PageListening' },
-    writing:   { label: '写作训练', icon: '✍️', module: 'PageWriting' },
+    writing:   { label: '案例分析', icon: '✍️', module: 'PageWriting' },
     speaking:  { label: '口语训练', icon: '🎙️', module: 'PageSpeaking' },
     quiz:      { label: '每日测验', icon: '📝', module: 'PageQuiz' },
     custom:    { label: '我的素材', icon: '📁', module: 'PageCustom' },
@@ -60,8 +60,8 @@ var App = (function () {
     if (!sidebar) return;
     sidebar.innerHTML =
       '<div class="sidebar-brand">' +
-        '<div class="brand-title">🎯 脉动品牌经理<br>英语面试训练</div>' +
-        '<div class="brand-sub">Danone Mizone · Brand Manager</div>' +
+        '<div class="brand-title">🎯 电商数据分析<br>英语面试训练</div>' +
+        '<div class="brand-sub">E-commerce Data Analyst · DTC + Marketplace</div>' +
       '</div>' +
       '<div class="sidebar-day-badge">Day ' + currentDay + ' / 14 · 🔥 ' + data.streakDays + ' 天连续</div>' +
       '<nav class="sidebar-nav">' + navHTML + '</nav>' +

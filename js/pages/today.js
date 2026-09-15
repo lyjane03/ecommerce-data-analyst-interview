@@ -23,9 +23,9 @@ var PageToday = (function () {
       {
         id: 'writing',
         icon: '✍️',
-        label: '写作训练',
+        label: '案例分析',
         duration: '80 分钟',
-        desc: '模板学习 20min → 改写练习 40min → 结构自查 20min',
+        desc: '读数据情境 20min → 英文作答 40min → 五维 rubric 自评 20min',
         color: 'purple',
         done: !!(progress.writing && progress.writing.completed),
         page: 'writing'
@@ -113,7 +113,7 @@ var PageToday = (function () {
         '<div class="tips-title">💡 今日学习建议</div>' +
         '<ul class="tips-list">' +
           '<li>先完成听力训练，趁注意力最集中时处理最难的模块</li>' +
-          '<li>写作训练时先读范文，再关闭范文独立练习</li>' +
+          '<li>案例分析先独立定义口径，再查看参考答案</li>' +
           '<li>口语录音后一定要回听，注意停顿和语调</li>' +
           '<li>测验前不要复习答案，测真实水平</li>' +
         '</ul>' +

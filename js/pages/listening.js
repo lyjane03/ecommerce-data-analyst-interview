@@ -37,6 +37,7 @@ var PageListening = (function () {
         '<strong>' + L.title + '</strong>' +
         '<span class="day-theme-badge">' + state.dayContent.themeZh + '</span>' +
       '</div>' +
+      '<div class="source-strip"><strong>来源依据：</strong>' + sourceLinks(state.dayContent.sourceIds) + '</div>' +
 
       '<div class="tab-bar">' +
         tabBtn('dictation', '📝 听写练习', state.phase) +
@@ -51,6 +52,13 @@ var PageListening = (function () {
   function tabBtn(id, label, active) {
     return '<button class="tab-btn' + (active === id ? ' active' : '') +
       '" data-tab="' + id + '" onclick="PageListening.switchPhase(\'' + id + '\')">' + label + '</button>';
+  }
+
+  function sourceLinks(ids) {
+    return (ids || []).map(function (id) {
+      var source = AppSources && AppSources.get(id);
+      return source ? '<a href="' + source.url + '" target="_blank" rel="noopener">' + source.publisher + '</a>' : '';
+    }).filter(Boolean).join(' · ');
   }
 
   function renderPhase(L) {
@@ -127,7 +135,7 @@ var PageListening = (function () {
         '</textarea>' +
         '<div class="keyword-section">' +
           '<label class="input-label">关键词抓取（逗号分隔，写出你认为的关键词）：</label>' +
-          '<input type="text" id="keywordsInput" class="keywords-input" placeholder="例如：brand equity, market share, consumer insight" value="' + (state.keywordsInput || '') + '">' +
+          '<input type="text" id="keywordsInput" class="keywords-input" placeholder="例如：conversion, cohort, data quality" value="' + (state.keywordsInput || '') + '">' +
         '</div>' +
         '<div class="action-row">' +
           '<button class="btn btn-primary btn-large" onclick="PageListening.scoreDictation()">📊 提交评分</button>' +

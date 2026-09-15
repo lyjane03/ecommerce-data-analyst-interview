@@ -65,7 +65,7 @@ var PageDashboard = (function () {
         '<div class="section-title">今日 vs 昨日对比</div>' +
         '<div class="compare-grid">' +
           compareCard('听力', todayP.listening, yesterdayP.listening) +
-          compareCard('写作', todayP.writing, yesterdayP.writing) +
+          compareCard('案例分析', todayP.writing, yesterdayP.writing) +
           compareCard('口语', todayP.speaking, yesterdayP.speaking) +
           compareCard('测验', todayP.quiz, yesterdayP.quiz) +
         '</div>' +

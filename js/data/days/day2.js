@@ -1,197 +1,27 @@
-// Day 2: Brand Positioning & the 4P Framework
-AppContent.days.push({
-  day: 2,
-  theme: 'Brand Positioning & the 4P Framework',
-  themeZh: '品牌定位与4P营销框架',
-  minutes: 240,
-
+AppContent.addDay({
+  day: 2, theme: 'Order, Item and Customer Grain', themeZh: '订单/商品/客户数据粒度', minutes: 240,
+  sourceIds: ['ga4_events', 'ga4_scopes', 'bigquery_sql'],
   listening: {
-    title: 'Repositioning a Sports Drink Brand — A 4P Approach',
-    text: [
-      'When we decided to reposition our sports drink, the first question we asked was: who is our core consumer, and what unmet need are we solving?',
-      'Our consumer research revealed a gap in the market — health-conscious millennials wanted functional hydration without artificial ingredients.',
-      'From a product perspective, we reformulated with natural electrolytes, removed artificial colors, and introduced a cleaner label design.',
-      'On pricing, we moved from a budget-tier position to a premium-accessible price point, which supported the brand\'s new health-oriented image.',
-      'For distribution, we expanded beyond traditional convenience stores into gyms, yoga studios, and health food chains — channels where our target consumer already shops.',
-      'Our promotional strategy shifted heavily toward digital — partnering with fitness KOLs on social platforms and running a "Hydrate Naturally" content campaign.',
-      'The repositioning took 18 months from insight to execution, involving cross-functional teams across marketing, R&D, supply chain, and sales.',
-      'The result was a 31% increase in brand preference among the 18–35 age group and a meaningful share gain in the premium sports drink segment.'
-    ],
-    textZh: [
-      '当我们决定重新定位我们的运动饮料时，我们首先问的问题是：谁是我们的核心消费者，我们在解决什么未被满足的需求？',
-      '我们的消费者调研揭示了一个市场空白——注重健康的千禧一代想要不含人工成分的功能性补水饮品。',
-      '从产品角度来看，我们用天然电解质重新配方，去除了人工色素，并推出了更简洁的标签设计。',
-      '在定价方面，我们从低价定位转向了"亲民高端"价位，这支撑了品牌全新的健康导向形象。',
-      '在分销渠道上，我们从传统便利店扩展到了健身房、瑜伽馆和健康食品连锁店——这些都是目标消费者已经在消费的渠道。',
-      '我们的推广策略大幅转向数字化——与健身类KOL在社交平台合作，并推出了"天然补水"内容营销活动。',
-      '这次品牌重新定位从洞察到执行历时18个月，涉及营销、研发、供应链和销售的跨职能团队协作。',
-      '最终结果是18-35岁年龄段的品牌偏好度提升了31%，并在高端运动饮料细分市场获得了有意义的份额增长。'
-    ],
-    keywords: ['repositioning', 'unmet need', 'functional hydration', 'premium-accessible', 'distribution', 'KOL', 'cross-functional', 'brand preference'],
-    comprehension: [
-      {
-        question: 'What was the key consumer insight that drove the brand repositioning?',
-        options: [
-          'Consumers wanted cheaper sports drinks',
-          'Health-conscious millennials wanted functional hydration without artificial ingredients',
-          'Consumers preferred larger bottle sizes',
-          'Athletes wanted higher sugar content for energy'
-        ],
-        answer: 1,
-        explanationZh: '核心消费者洞察是：注重健康的千禧一代想要不含人工成分的功能性补水饮品。'
-      },
-      {
-        question: 'Which pricing strategy was adopted during the repositioning?',
-        options: [
-          'Remaining in the budget tier',
-          'Moving to luxury pricing',
-          'Shifting to a premium-accessible price point',
-          'Offering bundle discounts'
-        ],
-        answer: 2,
-        explanationZh: '品牌从低价定位转向了"亲民高端"（premium-accessible）价位。'
-      },
-      {
-        question: 'What was the outcome of the repositioning in terms of brand preference?',
-        options: [
-          'A 13% increase among 25–40 age group',
-          'A 31% increase among the 18–35 age group',
-          'A 50% increase among all age groups',
-          'A 20% increase among senior consumers'
-        ],
-        answer: 1,
-        explanationZh: '结果是18-35岁年龄段的品牌偏好度提升了31%。'
-      }
-    ]
+    title: 'Start With Grain Before You Join Tables',
+    text: ['An order table has one row per order, while an item table has one row per product line.', 'A customer can place many orders, and one order can contain several items.', 'If I join item rows to a campaign table without checking grain, revenue may be multiplied.', 'I usually deduplicate events, document keys, and aggregate at the decision level.', 'That discipline makes the final metric easier to explain and easier to reconcile.'],
+    textZh: ['订单表通常一行一单，而商品表一行一条商品行。', '一个客户可以下多笔订单，一笔订单也可以包含多个商品。', '如果不检查粒度就把商品行和活动表连接，收入可能被重复放大。', '我通常先对事件去重、记录键，再按决策需要的粒度聚合。', '这种纪律让最终指标更容易解释，也更容易对账。'],
+    keywords: ['order grain', 'item grain', 'customer', 'duplicate', 'primary key', 'reconcile'],
+    comprehension: [{ question: 'What does one row in the item table represent?', options: ['A customer lifetime', 'A product line', 'A warehouse employee', 'A dashboard'], answer: 1, explanationZh: '商品表一行代表一条商品行。', sourceIds: ['ga4_scopes'] }, { question: 'What can happen when grain is ignored in a join?', options: ['Revenue can be multiplied', 'The browser closes', 'All products disappear', 'The date becomes today'], answer: 0, explanationZh: '粒度不匹配可能导致收入重复计算。', sourceIds: ['bigquery_sql', 'ga4_scopes'] }, { question: 'What does the analyst do before aggregating?', options: ['Change the business question', 'Deduplicate events and document keys', 'Delete the item table', 'Hide the denominator'], answer: 1, explanationZh: '文中说先去重事件并记录键。', sourceIds: ['ga4_scopes', 'bigquery_sql'] }]
   },
-
   writing: {
-    title: 'Proposing a Brand Positioning Update to Senior Management',
-    scenario: 'You are the Mizone Brand Manager. Based on recent consumer research, you believe the brand needs to refresh its positioning to better connect with Gen Z consumers. Write an internal email to your Marketing Director proposing this update and requesting budget approval for a consumer validation study.',
-    template: {
-      subject: 'Proposal: Mizone Brand Positioning Refresh — Consumer Validation Study Request',
-      structure: [
-        {
-          label: 'Opening & Context',
-          text: 'Hi [Name],\n\nI\'m writing to share a strategic recommendation based on recent consumer trend data for the Mizone brand.',
-          textZh: '您好 [姓名]，\n\n我写信是基于脉动品牌最新的消费者趋势数据，分享一项战略建议。'
-        },
-        {
-          label: 'Situation & Opportunity',
-          text: 'Our current brand positioning has driven strong performance among millennials, but emerging data suggests a growing opportunity with Gen Z (18–24) — a segment that over-indexes for functional beverage consumption yet shows lower Mizone purchase intent.',
-          textZh: '我们当前的品牌定位在千禧一代中表现强劲，但新数据显示Z世代（18-24岁）存在增长机会——这一群体在功能性饮料消费上的指数偏高，但脉动的购买意愿偏低。'
-        },
-        {
-          label: 'Proposed Action',
-          text: 'I propose a targeted positioning refresh to better resonate with Gen Z values: authenticity, mental wellness, and active lifestyle. The first step would be a consumer validation study (qualitative + quantitative) to stress-test the new positioning territory before committing to full execution.',
-          textZh: '我建议进行一次有针对性的定位焕新，以更好地契合Z世代的价值观：真实性、心理健康和积极生活方式。第一步是进行消费者验证研究（定性+定量），在全面执行前测试新定位方向。'
-        },
-        {
-          label: 'Budget & Timeline',
-          text: 'Estimated study cost: RMB 180,000. Timeline: 6 weeks from approval to insight readout. I\'ve identified two research agencies for competitive bidding.',
-          textZh: '预计研究费用：人民币18万元。时间线：从审批到洞察报告输出共6周。我已筛选了两家调研机构进行竞标。'
-        },
-        {
-          label: 'Action Request',
-          text: 'Could you please review the attached research brief and confirm your approval by [Date]? Happy to discuss in our next 1-on-1.',
-          textZh: '能否请您审阅附件中的调研摘要，并在[日期]前确认审批？很乐意在下次一对一会议中详细讨论。'
-        },
-        {
-          label: 'Closing',
-          text: 'Thank you for your support. Looking forward to your feedback.\n\nBest regards,\nXueyan Xu',
-          textZh: '感谢您的支持，期待您的反馈。\n\n此致，\n徐雪艳'
-        }
-      ]
-    },
-    task: 'Rewrite this weak email to make it strategic and professional:\n\n"Hi. I think we should change the brand because young people don\'t like it. Can you give us money to do research? Thanks."',
-    reference: 'Subject: Proposal: Mizone Brand Positioning Refresh — Consumer Validation Study Request\n\nHi [Name],\n\nI\'m writing to share a strategic recommendation based on our latest consumer tracking data.\n\nWhile Mizone continues to perform strongly among millennial consumers, recent data reveals an opportunity gap with Gen Z (18–24) — a high-potential segment that over-indexes for functional beverages yet shows below-average Mizone purchase intent. To capture this growth opportunity, I recommend a targeted positioning refresh centered on Gen Z values: authenticity, mental wellness, and active lifestyle.\n\nAs a first step, I propose a consumer validation study (qualitative + quantitative, estimated RMB 180,000, 6-week timeline) to rigorously test the new positioning territory before committing to execution.\n\nCould you please review the attached brief and confirm approval by [Date]? I\'ve identified two research agencies for competitive bidding and am happy to walk you through the recommendation in our next 1-on-1.\n\nThank you for your continued support.\n\nBest regards,\nXueyan Xu',
-    referenceZh: '主题：提案：脉动品牌定位焕新——消费者验证研究申请\n\n您好 [姓名]，\n\n我写信是基于我们最新的消费者追踪数据，分享一项战略建议。\n\n脉动在千禧一代消费者中持续表现强劲，但最近的数据显示Z世代（18-24岁）存在机会缺口——这一高潜力群体在功能性饮料消费上指数偏高，但脉动的购买意愿低于平均水平。为抓住这一增长机会，我建议围绕Z世代的价值观（真实性、心理健康、积极生活方式）进行有针对性的定位焕新。\n\n第一步，我建议开展消费者验证研究（定性+定量，预计费用18万元，周期6周），在全面执行前严格测试新定位方向。\n\n能否请您审阅附件摘要，并在[日期]前确认审批？我已筛选了两家调研机构进行竞标，很乐意在下次一对一会议中详细介绍这一建议。\n\n感谢您一如既往的支持。\n\n此致，\n徐雪艳'
+    title: 'Explain a Join Duplication Risk', prompt: 'A product manager sees revenue of RMB 4.2 million in your dashboard but Finance reports RMB 3.5 million. Write an English diagnosis explaining the likely grain issue and your validation plan.', dataContext: 'Synthetic tables: orders (one row/order), order_items (many rows/order), campaign_touchpoints (many rows/order), payments (one row/payment attempt). Your query joins all four before aggregation. A sample order has 3 items and 2 touchpoints; the dashboard shows 6 rows for that order.', deliverable: ['Name the one-to-many multiplication clearly.', 'Explain why summing item revenue after joining touchpoints is unsafe.', 'Propose a CTE or pre-aggregation plan at order grain.', 'State how to reconcile the corrected total to Finance.'], referenceAnswer: 'The gap is likely caused by a many-to-many multiplication. One order with three items and two campaign touchpoints becomes six joined rows, so summing item revenue after the join overstates revenue. I would create an item-level CTE aggregated to order_id, deduplicate payment attempts to the successful payment, and separately assign campaign attribution before joining the order-grain outputs. I would then compare distinct paid orders and net revenue with Finance for the same date, currency and refund scope.', referenceAnswerZh: '核心是 3 条商品行 × 2 条触点变成 6 行，导致收入放大；应先各自聚合到 order grain，再按相同日期、币种、退款口径和 Finance 对账。', sourceIds: ['ga4_scopes', 'bigquery_sql'], rubric: [{ id: 'problem', label: '问题定义', question: '是否指出 4.2m 与 3.5m 的差异并给出假设？', checkpoint: '把数据差异转化为可验证问题。' }, { id: 'metrics', label: '指标与口径', question: '是否说明 paid order、net revenue、日期和币种范围？', checkpoint: '对账必须使用同一口径。' }, { id: 'method', label: '分析方法', question: '是否解释 many-to-many 和 pre-aggregation？', checkpoint: '提到 order grain、CTE、去重。' }, { id: 'action', label: '业务建议', question: '是否提出修正并防止问题再次发生？', checkpoint: '建议数据契约或查询审查。' }, { id: 'english', label: '英文表达', question: '是否用准确英语解释技术风险？', checkpoint: '使用 grain、multiply、reconcile 等词。' }]
   },
-
   speaking: {
-    title: 'Present Mizone\'s Brand Positioning Using the 4P Framework',
-    outline: [
-      { point: '1. Opening — Brand Snapshot (0:00–0:20)', note: 'Briefly introduce Mizone: category, target consumer, current positioning.', noteZh: '简要介绍脉动：品类、目标消费者、当前定位。' },
-      { point: '2. Product (0:20–0:50)', note: 'Core product benefits, formulation strengths, packaging differentiation vs. competitors.', noteZh: '核心产品利益点、配方优势、与竞品的包装差异化。' },
-      { point: '3. Price (0:50–1:10)', note: 'Price tier, value perception, rationale for current pricing strategy.', noteZh: '价格档位、价值感知、当前定价策略的依据。' },
-      { point: '4. Place (1:10–1:30)', note: 'Key distribution channels, channel-specific strategies, coverage gaps.', noteZh: '主要分销渠道、渠道专属策略、覆盖缺口。' },
-      { point: '5. Promotion (1:30–1:50)', note: 'Key campaigns, media mix, digital vs. offline split, KOL strategy.', noteZh: '核心营销活动、媒体组合、线上与线下比例、KOL策略。' },
-      { point: '6. Positioning Recommendation (1:50–2:10)', note: 'One improvement across any P — with data-backed rationale.', noteZh: '就任何一个P提出一项改进建议——用数据支撑论点。' }
-    ],
-    keySentences: [
-      'Mizone is positioned as a functional hydration brand targeting health-active consumers aged 18 to 35.',
-      'From a product standpoint, our competitive advantage lies in the scientifically formulated electrolyte blend that supports active recovery.',
-      'Our pricing strategy reflects a premium-accessible positioning — accessible enough to drive trial, premium enough to convey health credentials.',
-      'In terms of distribution, we maintain strong presence in modern trade but see an underexplored opportunity in fitness and wellness channels.',
-      'I recommend shifting 20% of our promotional budget toward micro-KOL partnerships on Douyin to capture the Gen Z health community.'
-    ],
-    keySentencesZh: [
-      '脉动定位为功能性补水品牌，目标消费者为18-35岁的健康活跃人群。',
-      '从产品角度看，我们的竞争优势在于科学配方的电解质组合，支持运动后恢复。',
-      '我们的定价策略体现了"亲民高端"定位——足够亲民以促进试用，又足够高端以传递健康品质感。',
-      '在分销方面，我们在现代渠道保持强势，但在健身和健康生活渠道看到了尚未充分开发的机会。',
-      '我建议将20%的推广预算转向抖音上的微KOL合作，以触达Z世代健康社群。'
-    ],
-    selfEvalCriteria: [
-      { label: 'Framework Coverage', desc: 'Did you address all four Ps with specific, relevant data points?' },
-      { label: 'Data & Evidence', desc: 'Did you use at least one data point or metric per section?' },
-      { label: 'Strategic Thinking', desc: 'Did you offer a recommendation, not just a description?' },
-      { label: 'Fluency', desc: 'Did you speak naturally without reading from notes?' },
-      { label: 'Timing', desc: 'Did you complete the full analysis within 2 minutes?' }
-    ]
+    title: 'Walk Through a Data Model in an Interview', outline: [{ point: '1. State grains', note: 'Name what one row means in each table.', noteZh: '说清每张表一行代表什么。' }, { point: '2. Name keys', note: 'Identify primary and foreign keys before the join.', noteZh: '在 join 前指出主键和外键。' }, { point: '3. Prevent duplication', note: 'Explain pre-aggregation and deduplication with a small example.', noteZh: '用小例子解释预聚合和去重。' }, { point: '4. Reconcile', note: 'Describe the final metric check and business owner.', noteZh: '说明最终指标核对和业务负责人。' }], keySentences: ['At order grain, one row represents one order; at item grain, one row represents one product line.', 'I check join cardinality before I trust an aggregate.', 'I pre-aggregate each many-side table before bringing it back to the order grain.', 'The final step is reconciliation against a trusted source with the same scope.'], keySentencesZh: ['订单粒度下一行代表一笔订单，商品粒度下一行代表一条商品行。', '在信任聚合结果前，我会检查 join 的基数。', '我会先把多端表预聚合，再带回订单粒度。', '最后用相同口径与可信来源对账。'], sourceIds: ['ga4_scopes', 'bigquery_sql'], selfEvalCriteria: [{ label: 'Grain', desc: '每张表的粒度是否清楚？' }, { label: 'Logic', desc: '是否解释 join 基数？' }, { label: 'Example', desc: '是否用数字说明重复？' }, { label: 'Action', desc: '是否提出修复与预防？' }, { label: 'Timing', desc: '是否在 2 分钟内完成？' }]
   },
-
-  quiz: {
-    questions: [
-      {
-        type: 'mcq',
-        question: 'In the 4P framework, which "P" refers to how a brand communicates its value to consumers across media channels?',
-        options: ['Product', 'Price', 'Place', 'Promotion'],
-        answer: 3,
-        explanation: '"Promotion" covers all communication activities: advertising, PR, social media, KOL partnerships, and events.',
-        explanationZh: '"Promotion"（推广）涵盖所有沟通活动：广告、公关、社交媒体、KOL合作和活动。'
-      },
-      {
-        type: 'mcq',
-        question: 'What does "brand positioning" primarily define?',
-        options: [
-          'The physical location of the brand\'s headquarters',
-          'How the brand wants to be perceived in the minds of target consumers relative to competitors',
-          'The shelf placement strategy in retail stores',
-          'The price tier the brand occupies'
-        ],
-        answer: 1,
-        explanation: 'Brand positioning is about creating a distinct perception in the consumer\'s mind — the unique space the brand owns relative to competitors.',
-        explanationZh: '品牌定位是在消费者心智中创造独特认知——品牌相对于竞品所占据的独特位置。'
-      },
-      {
-        type: 'fillblank',
-        question: 'A brand that is priced higher than mass-market competitors but lower than luxury brands is said to occupy a ________ price position.',
-        answer: 'premium-accessible',
-        explanation: '"Premium-accessible" (also called "masstige") describes a positioning that combines aspirational quality with everyday affordability.',
-        explanationZh: '"Premium-accessible"（亲民高端，也叫"masstige"）描述的是一种将品质感与日常可负担性相结合的定位。'
-      },
-      {
-        type: 'mcq',
-        question: 'Which of the following best describes an "unmet consumer need"?',
-        options: [
-          'A need that has already been fulfilled by existing products',
-          'A desire or problem that current market offerings have not adequately addressed',
-          'A need that consumers are not willing to pay for',
-          'A product feature that brands offer but consumers do not value'
-        ],
-        answer: 1,
-        explanation: 'An unmet need is a gap between what consumers want and what existing products deliver — the foundation of strong brand positioning.',
-        explanationZh: '未被满足的需求是消费者想要的与现有产品所能提供的之间的差距——这是强大品牌定位的基础。'
-      },
-      {
-        type: 'correction',
-        question: 'Correct this sentence: "The brand is position as a premium product for young consumer."',
-        corrected: 'The brand is positioned as a premium product for young consumers.',
-        answer: 'The brand is positioned as a premium product for young consumers.',
-        explanation: 'Two errors: (1) "position" → "positioned" (past participle in passive voice); (2) "consumer" → "consumers" (plural).',
-        explanationZh: '两处错误：(1)"position"应改为"positioned"（被动语态需用过去分词）；(2)"consumer"应改为"consumers"（复数）。'
-      }
-    ]
-  }
+  quiz: { questions: [
+    AppContent.q('mcq', 'metrics', 'An order has three item rows. What does counting item rows measure?', { options: ['Orders', 'Units or item lines depending on grain', 'Unique customers', 'Refunds'], answer: 1 }, 'The business meaning of a count follows the table grain.', '它衡量商品行或件数，具体取决于表定义，不等同于订单数。', ['ga4_scopes']),
+    AppContent.q('mcq', 'metrics', 'Which key is usually unique in an order-grain table?', { options: ['order_id', 'product_name', 'campaign_name', 'device_type'], answer: 0 }, 'A key must identify one entity at the table grain.', '订单粒度下 order_id 通常是唯一键。', ['bigquery_sql', 'ga4_scopes']),
+    AppContent.q('fillblank', 'metrics', 'A table with one row per business entity has a defined data ________.', 'grain', 'Grain is the level represented by one row.', 'grain 是一行所代表的层级。', ['ga4_scopes', 'bigquery_sql']),
+    AppContent.q('mcq', 'sql', 'What is the safest first step before joining two many-side tables?', { options: ['Aggregate each to the intended grain', 'Remove all columns', 'Use SELECT * and sum everything', 'Round all amounts'], answer: 0 }, 'Pre-aggregate each many-side table to the intended grain.', '先把多端表聚合到目标粒度，可以避免最终 join 前的重复。', ['bigquery_sql', 'ga4_scopes']),
+    AppContent.q('mcq', 'sql', 'Which join keeps all orders even when no campaign touchpoint matches?', { options: ['INNER JOIN', 'LEFT JOIN from orders', 'CROSS JOIN', 'SELF JOIN only'], answer: 1 }, 'A left join from orders preserves orders without a matching touchpoint.', '从订单表出发的 LEFT JOIN 会保留没有触点的订单。', ['bigquery_sql']),
+    AppContent.q('mcq', 'funnel', 'Why might zero-purchase sessions be lost with an inner join to orders?', { options: ['They have no matching order row', 'They have two orders', 'They have a primary key', 'They are always refunds'], answer: 0 }, 'A session without an order has no matching order row and is removed.', '没有订单的 session 匹配不到订单行，会被 inner join 删除。', ['ga4_events', 'bigquery_sql']),
+    AppContent.q('mcq', 'communication', 'What is the clearest way to explain a 3×2 join problem?', { options: ['The database is weird.', 'Three item rows times two touchpoints create six rows for one order.', 'The chart is blue.', 'Finance is wrong.'], answer: 1 }, 'A small concrete example makes technical risk understandable.', '用 3×2=6 的具体例子解释最清楚。', ['bigquery_sql']),
+    AppContent.q('mcq', 'experiment', 'In an experiment table, why should assignment grain be checked?', { options: ['A user assigned many times can contaminate groups', 'It changes the chart font', 'It removes the need for a control group', 'It guarantees power'], answer: 0 }, 'Repeated assignment can contaminate treatment and control exposure.', '同一用户被重复分组会污染实验组和对照组。', ['microsoft_srm', 'stats_power'])
+  ]}
 });
