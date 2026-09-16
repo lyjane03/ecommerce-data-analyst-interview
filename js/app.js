@@ -1,9 +1,9 @@
 var App = (function () {
-  var currentPage = 'dashboard';
+  var currentPage = 'guide';
   var pages = {
     guide:     { label: '使用说明', icon: '📖', module: 'PageGuide' },
-    overview:  { label: '课程总览', icon: '📅', module: 'PageOverview' },
-    dashboard: { label: '进度看板', icon: '📊', module: 'PageDashboard' },
+    outline:   { label: '课程大纲', icon: '🧭', module: 'PageOutline' },
+    overview:  { label: '学习进度', icon: '📈', module: 'PageOverview' },
     today:     { label: '今日训练', icon: '🗓️', module: 'PageToday' },
     listening: { label: '听力训练', icon: '🎧', module: 'PageListening' },
     writing:   { label: '案例分析', icon: '✍️', module: 'PageWriting' },
@@ -41,7 +41,7 @@ var App = (function () {
     // 入门区
     navHTML += '<div class="nav-section-label">入门</div>';
     navHTML += navItem('guide');
-    navHTML += navItem('overview');
+    navHTML += navItem('outline');
 
     // 训练区
     navHTML += '<div class="nav-section-label" style="margin-top:.4rem">训练模块</div>';
@@ -50,11 +50,14 @@ var App = (function () {
       navHTML += navItem(id, done);
     });
 
-    // 其他区
-    navHTML += '<div class="nav-section-label" style="margin-top:.4rem">其他</div>';
-    ['dashboard', 'custom', 'settings'].forEach(function (id) {
+    // 复盘区
+    navHTML += '<div class="nav-section-label" style="margin-top:.4rem">复盘</div>';
+    ['overview', 'custom'].forEach(function (id) {
       navHTML += navItem(id);
     });
+
+    navHTML += '<div class="nav-section-label" style="margin-top:.4rem">设置</div>';
+    navHTML += navItem('settings');
 
     var sidebar = document.getElementById('sidebar');
     if (!sidebar) return;
@@ -99,7 +102,7 @@ var App = (function () {
   }
 
   function navigate(pageId) {
-    if (!pages[pageId]) pageId = 'dashboard';
+    if (!pages[pageId]) pageId = 'guide';
 
     var prevModule = pages[currentPage] ? window[pages[currentPage].module] : null;
     if (prevModule && prevModule.onLeave) prevModule.onLeave();

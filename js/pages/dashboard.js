@@ -1,6 +1,6 @@
 var PageDashboard = (function () {
 
-  function render() {
+  function render(embedded) {
     var data = AppStorage.getAll();
     var currentDay = AppStorage.getCurrentDay();
     var allDays = Object.keys(data.dailyProgress || {});
@@ -28,10 +28,10 @@ var PageDashboard = (function () {
         (p.quiz && p.quiz.completed);
     }).length;
 
-    return '<div class="page-dashboard">' +
-      '<h2 class="page-title">学习进度看板</h2>' +
+    return '<div class="page-dashboard' + (embedded ? ' embedded' : '') + '">' +
+      (embedded ? '' : '<h2 class="page-title">学习进度</h2>') +
 
-      '<div class="stats-row">' +
+      (embedded ? '' : '<div class="stats-row">' +
         '<div class="stat-card accent-blue">' +
           '<div class="stat-number">' + data.streakDays + '</div>' +
           '<div class="stat-label">连续学习天数</div>' +
@@ -52,14 +52,14 @@ var PageDashboard = (function () {
           '<div class="stat-label">总体完成率</div>' +
           '<div class="stat-icon">📊</div>' +
         '</div>' +
-      '</div>' +
+      '</div>') +
 
-      '<div class="progress-bar-section">' +
+      (embedded ? '' : '<div class="progress-bar-section">' +
         '<div class="section-title">14天进度概览</div>' +
         '<div class="day-progress-grid">' +
         generateDayGrid(data, currentDay) +
         '</div>' +
-      '</div>' +
+      '</div>') +
 
       '<div class="today-vs-yesterday">' +
         '<div class="section-title">今日 vs 昨日对比</div>' +

@@ -58,7 +58,7 @@ var PageToday = (function () {
       '<div class="today-header">' +
         '<div class="today-header-top">' +
           '<div class="today-day-badge">Day ' + currentDay + ' / 14</div>' +
-          '<button class="overview-shortcut-btn" onclick="App.navigate(\'overview\')">📅 查看14天课程总览</button>' +
+          '<button class="overview-shortcut-btn" onclick="App.navigate(\'overview\')">📈 查看学习进度</button>' +
         '</div>' +
         '<h2 class="page-title">今日训练计划</h2>' +
         '<div class="today-theme">' +

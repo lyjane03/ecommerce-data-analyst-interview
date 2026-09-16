@@ -1,5 +1,6 @@
 var PageOverview = (function () {
   var state = {
+    section: 'course', // 'course' | 'insights'
     viewMode: 'grid',   // 'grid' | 'list'
     filter: 'all'       // 'all' | 'done' | 'partial' | 'none'
   };
@@ -32,11 +33,28 @@ var PageOverview = (function () {
   }
 
   function render() {
+    return '<div class="page-overview">' +
+      '<div class="overview-header">' +
+        '<div>' +
+          '<h2 class="page-title">学习进度</h2>' +
+          '<p class="overview-subtitle">继续当前训练，查看 14 天完成情况，并复盘各项能力变化</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="progress-section-tabs">' +
+        '<button class="progress-section-tab' + (state.section === 'course' ? ' active' : '') + '" onclick="PageOverview.setSection(\'course\')">📅 课程进度</button>' +
+        '<button class="progress-section-tab' + (state.section === 'insights' ? ' active' : '') + '" onclick="PageOverview.setSection(\'insights\')">📊 能力复盘</button>' +
+      '</div>' +
+      (state.section === 'course' ? renderCourseProgress() : PageDashboard.render(true)) +
+    '</div>';
+  }
+
+  function renderCourseProgress() {
     var data = AppStorage.getAll();
     var progress = (data && data.dailyProgress) || {};
     var realDay = AppStorage.getRealCurrentDay();
-
     var days = AppContent.days;
+    var currentContent = days[realDay - 1];
+    var currentStatus = getDayStatus(realDay, progress);
 
     var filteredDays = days.filter(function (d) {
       var status = getDayStatus(d.day, progress);
@@ -47,11 +65,22 @@ var PageOverview = (function () {
       return true;
     });
 
-    return '<div class="page-overview">' +
-      '<div class="overview-header">' +
-        '<div>' +
-          '<h2 class="page-title">课程总览</h2>' +
-          '<p class="overview-subtitle">14天完整训练计划 · 点击任意天卡片可直接进入训练</p>' +
+    return '<div class="progress-course-panel">' +
+      '<div class="progress-resume-card">' +
+        '<div class="progress-resume-copy">' +
+          '<span class="progress-resume-kicker">当前学习任务</span>' +
+          '<strong>Day ' + realDay + ' · ' + (currentContent ? currentContent.themeZh : '') + '</strong>' +
+          '<span>' + (currentStatus === 'done' ? '今天的四个模块已经完成，可以复习或继续查看能力变化。' : '从上次的位置继续，完成今天的听力、案例、口语和测验。') + '</span>' +
+        '</div>' +
+        '<button class="btn btn-primary" onclick="PageOverview.enterDay(' + realDay + ')">' + (currentStatus === 'done' ? '复习今日内容' : '继续今日训练') + ' →</button>' +
+      '</div>' +
+
+      '<div class="progress-course-toolbar">' +
+        '<div class="overview-filter-bar">' +
+          filterBtn('all', '全部', progress, days) +
+          filterBtn('done', '已完成', progress, days) +
+          filterBtn('partial', '进行中', progress, days) +
+          filterBtn('none', '未开始', progress, days) +
         '</div>' +
         '<div class="overview-controls">' +
           '<div class="view-toggle">' +
@@ -59,13 +88,6 @@ var PageOverview = (function () {
             '<button class="view-btn' + (state.viewMode === 'list' ? ' active' : '') + '" onclick="PageOverview.setView(\'list\')" title="列表视图">☰</button>' +
           '</div>' +
         '</div>' +
-      '</div>' +
-
-      '<div class="overview-filter-bar">' +
-        filterBtn('all', '全部', progress, days) +
-        filterBtn('done', '已完成', progress, days) +
-        filterBtn('partial', '进行中', progress, days) +
-        filterBtn('none', '未开始', progress, days) +
       '</div>' +
 
       '<div class="overview-stats">' +
@@ -166,14 +188,30 @@ var PageOverview = (function () {
 
   function setView(mode) {
     state.viewMode = mode;
-    var el = document.getElementById('app-content');
-    if (el) el.innerHTML = render();
+    rerender();
   }
 
   function setFilter(filter) {
     state.filter = filter;
+    rerender();
+  }
+
+  function setSection(section) {
+    if (section !== 'course' && section !== 'insights') return;
+    state.section = section;
+    rerender();
+  }
+
+  function rerender() {
     var el = document.getElementById('app-content');
     if (el) el.innerHTML = render();
+    afterRender();
+  }
+
+  function afterRender() {
+    if (state.section === 'insights' && typeof PageDashboard !== 'undefined' && PageDashboard.afterRender) {
+      PageDashboard.afterRender();
+    }
   }
 
   function enterDay(day) {
@@ -183,6 +221,8 @@ var PageOverview = (function () {
 
   return {
     render: render,
+    afterRender: afterRender,
+    setSection: setSection,
     setView: setView,
     setFilter: setFilter,
     enterDay: enterDay
