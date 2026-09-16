@@ -124,10 +124,15 @@ var PageDashboard = (function () {
     var diffClass = diff === null ? '' : (diff >= 0 ? 'up' : 'down');
     return '<div class="compare-card">' +
       '<div class="compare-label">' + label + '</div>' +
-      '<div class="compare-today">' + (todayScore != null ? todayScore + '分' : '--') + '</div>' +
+      '<div class="compare-today">' + (todayScore != null ? todayScore + '分' : '--') + (today ? sourceBadge(today) : '') + '</div>' +
       '<div class="compare-diff ' + diffClass + '">' + diffStr + '</div>' +
-      '<div class="compare-yesterday">昨日: ' + (yestScore != null ? yestScore + '分' : '--') + '</div>' +
+      '<div class="compare-yesterday">昨日: ' + (yestScore != null ? yestScore + '分' : '--') + (yesterday ? sourceBadge(yesterday) : '') + '</div>' +
     '</div>';
+  }
+
+  function sourceBadge(progress) {
+    var label = AppStorage.scoreSourceLabel(progress);
+    return label ? '<span class="score-source-badge ' + (progress.scoreSource === 'ai' ? 'ai' : 'self') + '">' + label + '</span>' : '';
   }
 
   function afterRender() {

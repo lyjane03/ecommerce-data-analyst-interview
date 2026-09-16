@@ -93,9 +93,18 @@ var AppStorage = (function () {
   function saveDayProgress(day, module, result) {
     var data = getAll() || cloneDefault();
     if (!data.dailyProgress[day]) data.dailyProgress[day] = { date: new Date().toISOString().split('T')[0] };
-    data.dailyProgress[day][module] = result;
+    var previous = data.dailyProgress[day][module];
+    data.dailyProgress[day][module] = previous && result && typeof previous === 'object' && typeof result === 'object'
+      ? Object.assign({}, previous, result)
+      : result;
     data.lastActiveDate = new Date().toISOString().split('T')[0];
     updateStreak(data); saveAll(data); return data;
+  }
+  function scoreSourceLabel(moduleProgress) {
+    if (!moduleProgress) return '';
+    if (moduleProgress.scoreSource === 'ai') return 'AI评分';
+    if (moduleProgress.scoreSource === 'self') return '自评';
+    return '';
   }
   function addWeakVocabulary(word) { var data = getAll() || cloneDefault(); if (data.weakPoints.vocabulary.indexOf(word) < 0) { data.weakPoints.vocabulary.push(word); if (data.weakPoints.vocabulary.length > 50) data.weakPoints.vocabulary.shift(); saveAll(data); } }
   function addWeakSentence(sentence) { var data = getAll() || cloneDefault(); if (data.weakPoints.sentences.indexOf(sentence) < 0) { data.weakPoints.sentences.push(sentence); if (data.weakPoints.sentences.length > 30) data.weakPoints.sentences.shift(); saveAll(data); } }
@@ -130,7 +139,7 @@ var AppStorage = (function () {
     init: init, getAll: getAll, saveAll: saveAll, get: get, set: set,
     getCurrentDay: getCurrentDay, getRealCurrentDay: getRealCurrentDay,
     setViewDay: setViewDay, clearViewDay: clearViewDay, getViewDay: getViewDay,
-    getDayProgress: getDayProgress, saveDayProgress: saveDayProgress,
+    getDayProgress: getDayProgress, saveDayProgress: saveDayProgress, scoreSourceLabel: scoreSourceLabel,
     addWeakVocabulary: addWeakVocabulary, addWeakSentence: addWeakSentence, addQuizError: addQuizError,
     exportJSON: exportJSON, importJSON: importJSON, reset: reset
   };

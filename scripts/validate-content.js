@@ -71,6 +71,7 @@ var expectedThemes = [
   '商品、搜索、品类、价格与促销', '库存、缺货、履约、取消与退货', '高级 SQL（窗口、滚动、Top-N、去重）',
   '看板、业务叙事与跨部门沟通', '埋点、口径、时区、币种和数据质量', '收入下滑与大促异常诊断', '完整模拟面试'
 ];
+var expectedWritingRubricIds = ['problem', 'metrics', 'method', 'action', 'english'];
 
 function validateQuestion(q, label, questionSeen) {
   assert(q && ['mcq', 'fillblank', 'correction'].indexOf(q.type) >= 0, label + ' 题型无效');
@@ -119,6 +120,8 @@ function validateDays() {
     var writing = day.writing;
     assert(writing && writing.title && writing.prompt && writing.dataContext && writing.deliverable && writing.referenceAnswer, label + ' 案例分析字段不完整');
     assert(Array.isArray(writing.rubric) && writing.rubric.length === 5, label + ' 案例 rubric 应为 5 维');
+    var writingRubricIds = writing.rubric.map(function (dim) { return dim && dim.id; });
+    assert(new Set(writingRubricIds).size === 5 && expectedWritingRubricIds.every(function (id) { return writingRubricIds.indexOf(id) >= 0; }), label + ' 案例 rubric ID 必须唯一且完整');
     checkSources(writing.sourceIds, sourceMap, label + ' 案例分析');
     writingCount++;
 

@@ -67,6 +67,12 @@ var PageSettings = (function () {
       '</div>' +
 
       '<div class="settings-section">' +
+        '<div class="section-title">🤖 AI 辅助评分</div>' +
+        '<div class="setting-row"><label class="setting-label">服务状态</label><div id="ai-config-status" class="setting-info">正在检查 AI 服务…</div></div>' +
+        '<div class="setting-row"><label class="setting-label">数据传输说明</label><div class="setting-hint">案例答案只在主动点击后发送给 DeepSeek；口语录音先发送给 GLM 转写，transcript 再发送给 DeepSeek 评分。原始录音不会保存到浏览器进度，临时转换文件会在请求后删除。</div></div>' +
+      '</div>' +
+
+      '<div class="settings-section">' +
         '<div class="section-title">🔊 语音设置</div>' +
         '<div class="setting-row">' +
           '<label class="setting-label">TTS 支持状态</label>' +
@@ -98,7 +104,7 @@ var PageSettings = (function () {
       '</div>' +
 
       '<div class="settings-footer">' +
-        '<div class="footer-info">E-commerce Data Analyst 英语面试训练 · 数据存储于本地浏览器 · 不上传任何服务器</div>' +
+        '<div class="footer-info">E-commerce Data Analyst 英语面试训练 · 学习进度存储于本地浏览器 · AI 仅在主动点击后发送</div>' +
       '</div>' +
     '</div>';
   }
@@ -110,6 +116,18 @@ var PageSettings = (function () {
     App.showToast('开始日期已保存：' + input.value, 'success');
     var el = document.querySelector('#app-content');
     if (el) el.innerHTML = render();
+  }
+
+  function afterRender() {
+    AppAIScoring.health().then(function () {
+      var el = document.getElementById('ai-config-status');
+      if (!el) return;
+      var status = AppAIScoring.getStatus();
+      el.className = 'setting-info ' + (status.scoringConfigured && status.transcriptionConfigured ? 'status-ok' : 'status-warn');
+      var scoring = status.scoringConfigured ? 'DeepSeek ✅ ' + status.scoringModel : 'DeepSeek ⚠️ 未配置';
+      var transcription = status.transcriptionConfigured ? 'GLM ✅ ' + status.transcribeModel : 'GLM ⚠️ 未配置';
+      el.textContent = scoring + '；' + transcription;
+    });
   }
 
   function exportData() {
@@ -138,6 +156,7 @@ var PageSettings = (function () {
 
   return {
     render: render,
+    afterRender: afterRender,
     saveStartDate: saveStartDate,
     exportData: exportData,
     importData: importData,

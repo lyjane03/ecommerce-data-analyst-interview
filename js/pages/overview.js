@@ -158,7 +158,7 @@ var PageOverview = (function () {
     return '<div class="ov-module' + (done ? ' ov-module-done' : '') + '">' +
       '<span class="ov-mod-icon">' + icon + '</span>' +
       '<div class="ov-mod-body">' +
-        '<div class="ov-mod-label">' + label + (done ? ' <span class="ov-mod-check">✓</span>' : '') + (score !== null ? ' <span class="ov-mod-score">' + score + '分</span>' : '') + '</div>' +
+        '<div class="ov-mod-label">' + label + (done ? ' <span class="ov-mod-check">✓</span>' : '') + (score !== null ? ' <span class="ov-mod-score">' + score + '分</span>' : '') + (moduleProgress && AppStorage.scoreSourceLabel(moduleProgress) ? ' <span class="ov-mod-source ' + (moduleProgress.scoreSource === 'ai' ? 'ai' : 'self') + '">' + AppStorage.scoreSourceLabel(moduleProgress) + '</span>' : '') + '</div>' +
         '<div class="ov-mod-summary">' + summary + '</div>' +
       '</div>' +
     '</div>';

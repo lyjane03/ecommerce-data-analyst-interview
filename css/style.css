@@ -628,6 +628,80 @@ body {
 .rating-btn:hover, .rating-btn.active { border-color: var(--blue); background: var(--blue); color: #fff; }
 .rubric-total { margin-top: 1rem; padding: 0.85rem 1rem; background: var(--blue-light); border-radius: var(--radius-sm); color: var(--blue-dark); font-weight: 700; }
 
+/* ===== AI 评分与证据 ===== */
+.ai-disclosure {
+  background: var(--purple-light);
+  border: 1px solid #ddd6fe;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  color: var(--gray-700);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  margin: 1rem 0;
+}
+.ai-status { display: inline-block; margin-left: 0.5rem; font-weight: 700; }
+.ai-status.configured { color: var(--green); }
+.ai-status.unconfigured { color: var(--orange); }
+.ai-empty {
+  background: var(--gray-50);
+  border: 1px dashed var(--gray-300);
+  color: var(--gray-500);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+}
+.ai-error {
+  background: var(--red-light);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  color: #b91c1c;
+  padding: 0.7rem 1rem;
+  margin: 0.75rem 0;
+}
+.ai-result-card {
+  background: #fff;
+  border: 1px solid #c4b5fd;
+  border-left: 4px solid var(--purple);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+.ai-result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.ai-result-kicker { color: var(--purple); font-size: 0.78rem; font-weight: 700; }
+.ai-result-head h3 { color: var(--gray-900); margin-top: 0.15rem; }
+.ai-summary { color: var(--gray-700); margin: 0.75rem 0; }
+.score-source-badge, .ov-mod-source {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+.score-source-badge.ai, .ov-mod-source.ai { background: var(--purple-light); color: var(--purple); }
+.score-source-badge.self, .ov-mod-source.self { background: var(--blue-light); color: var(--blue); }
+.ai-dimensions { display: grid; gap: 0.6rem; }
+.ai-dimension { background: var(--gray-50); border-radius: var(--radius-sm); padding: 0.7rem 0.8rem; }
+.ai-dimension-head { display: flex; justify-content: space-between; color: var(--gray-800); }
+.ai-dimension-head span { color: var(--purple); font-weight: 700; }
+.ai-evidence { color: var(--green); font-size: 0.82rem; margin-top: 0.25rem; }
+.ai-evidence.missing { color: var(--orange); }
+.ai-feedback { color: var(--gray-600); font-size: 0.84rem; margin-top: 0.25rem; }
+.ai-feedback-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; color: var(--gray-700); font-size: 0.86rem; }
+.ai-feedback-columns ul { padding-left: 1.2rem; margin-top: 0.35rem; }
+.ai-model-answer { margin-top: 1rem; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; }
+.ai-model-answer summary { cursor: pointer; color: var(--blue); font-weight: 600; }
+.ai-model-answer pre { white-space: pre-wrap; margin-top: 0.6rem; color: var(--gray-700); font: inherit; }
+.self-eval-heading { display: flex; justify-content: space-between; color: var(--gray-700); margin: 1rem 0 0.65rem; }
+.self-eval-heading span { color: var(--gray-500); font-size: 0.85rem; }
+.transcript-card { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: var(--radius-sm); padding: 0.85rem; margin: 1rem 0; }
+.transcript-title { color: var(--gray-800); font-weight: 700; margin-bottom: 0.45rem; }
+.transcript-textarea { width: 100%; border: 1px solid var(--gray-300); border-radius: 6px; padding: 0.65rem; font: inherit; resize: vertical; color: var(--gray-700); }
+.transcript-note { color: var(--gray-500); font-size: 0.78rem; margin-top: 0.45rem; }
+
 /* ===== 听力页面 ===== */
 .tts-controls {
   display: flex;
@@ -1288,6 +1362,7 @@ body {
 .setting-hint.danger { color: var(--red); }
 .status-ok { color: var(--green); }
 .status-err { color: var(--red); }
+.status-warn { color: var(--orange); }
 
 .backup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; }
 .backup-card { background: var(--gray-50); border-radius: var(--radius-sm); padding: 1.25rem; }
@@ -1323,6 +1398,9 @@ body {
   .compare-grid { grid-template-columns: 1fr 1fr; }
   .data-stats { grid-template-columns: 1fr 1fr; }
   .tab-btn { font-size: 0.78rem; padding: 0.45rem 0.5rem; }
+  .ai-feedback-columns { grid-template-columns: 1fr; }
+  .ai-result-head { flex-direction: column; gap: 0.35rem; }
+  .ai-status { display: block; margin: 0.35rem 0 0; }
 }
 
 /* ===== 使用说明页 ===== */

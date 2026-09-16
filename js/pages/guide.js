@@ -11,8 +11,8 @@ var PageGuide = (function () {
         '<p>每天 240 分钟，四个模块围绕同一个电商分析主题：</p>' +
         '<div class="guide-modules">' +
           guideModule('🎧', '听力训练', '90 分钟', '精听 → 跟读 → 听力理解，熟悉真实分析沟通语境') +
-          guideModule('✍️', '案例分析', '80 分钟', '阅读模拟数据情境 → 写分析结论 → 按五维 rubric 自评') +
-          guideModule('🎙️', '口语训练', '50 分钟', '分析提纲 → 浏览器录音 → 回听并自评') +
+          guideModule('✍️', '案例分析', '80 分钟', '阅读模拟数据情境 → 写分析结论 → 可选 AI 评分或五维自评') +
+          guideModule('🎙️', '口语训练', '50 分钟', '分析提纲 → 浏览器录音 → 可选转写与内容评分 → 自评') +
           guideModule('📝', '每日测验', '20 分钟', '指标、SQL、漏斗、实验和数据质量混合题') +
         '</div>') +
       section('🗺️ 第三步：推荐学习顺序',
@@ -20,7 +20,7 @@ var PageGuide = (function () {
       section('💡 面试分析习惯',
         '<ul class="guide-list"><li>先确认业务目标与指标分母，再开始计算。</li><li>解释 SQL 时先说每张表的 grain，再说 join 和去重。</li><li>实验结论同时说明效果量、不确定性、SRM 和 guardrail。</li><li>汇报遵循结论 → 证据 → 风险 → 建议 → 下一步。</li></ul>') +
       section('💾 数据说明',
-        '<ul class="guide-list"><li>进度只保存在本机浏览器，不上传服务器。</li><li>导出备份包含应用身份和版本号，其他版本的文件会被拒绝导入。</li><li>页面中的业务公司、金额、订单量和实验结果均为 synthetic / 模拟数据。</li><li>建议在完成重要练习后到「设置」导出 JSON 备份。</li></ul>') +
+        '<ul class="guide-list"><li>学习进度和 AI 评分结果保存在本机浏览器；只有主动点击 AI 按钮后，案例答案才会发送给 DeepSeek，口语录音才会发送给 GLM 转写并由 DeepSeek 评分。</li><li>AI 评分未配置、网络失败或不愿发送内容时，人工自评仍可用。</li><li>口语 AI 只根据 transcript 评估内容，不是发音、口音、语调或自信度测评。</li><li>导出备份包含应用身份和版本号，其他版本的文件会被拒绝导入。</li><li>页面中的业务公司、金额、订单量和实验结果均为 synthetic / 模拟数据。</li><li>建议在完成重要练习后到「设置」导出 JSON 备份。</li></ul>') +
       '<div class="guide-start-btn-wrap"><button class="btn btn-primary btn-large" onclick="App.navigate(\'overview\')">📅 查看课程总览，开始学习 →</button></div>' +
     '</div>';
   }

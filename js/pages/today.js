@@ -100,7 +100,7 @@ var PageToday = (function () {
           '<div class="phase-desc">' + phase.desc + '</div>' +
           '<div class="phase-score">' +
             (progress[phase.id] && progress[phase.id].score != null ?
-              '<span class="score-badge">得分：' + progress[phase.id].score + '分</span>' : '') +
+              '<span class="score-badge">得分：' + progress[phase.id].score + '分</span>' + (AppStorage.scoreSourceLabel(progress[phase.id]) ? '<span class="score-source-badge ' + (progress[phase.id].scoreSource === 'ai' ? 'ai' : 'self') + '">' + AppStorage.scoreSourceLabel(progress[phase.id]) + '</span>' : '') : '') +
           '</div>' +
           '<button class="btn btn-' + phase.color + ' phase-btn" onclick="App.navigate(\'' + phase.page + '\')">' +
             (phase.done ? '复习' : '开始') + ' ' + phase.label +

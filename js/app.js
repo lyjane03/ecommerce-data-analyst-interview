@@ -65,7 +65,7 @@ var App = (function () {
       '</div>' +
       '<div class="sidebar-day-badge">Day ' + currentDay + ' / 14 · 🔥 ' + data.streakDays + ' 天连续</div>' +
       '<nav class="sidebar-nav">' + navHTML + '</nav>' +
-      '<div class="sidebar-footer">本地离线应用 · 数据仅存于本机</div>';
+      '<div class="sidebar-footer">学习进度保存在本机 · AI 仅在主动点击后发送</div>';
   }
 
   function renderTopbar() {

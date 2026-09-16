@@ -4,6 +4,8 @@ var AppRecorder = (function () {
   var audioBlob = null;
   var audioUrl = null;
   var stream = null;
+  var recordingStartedAt = 0;
+  var audioDurationSeconds = 0;
 
   function isSupported() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
@@ -19,6 +21,8 @@ var AppRecorder = (function () {
         stream = s;
         audioChunks = [];
         audioBlob = null;
+        audioDurationSeconds = 0;
+        recordingStartedAt = Date.now();
         if (audioUrl) URL.revokeObjectURL(audioUrl);
         audioUrl = null;
 
@@ -47,7 +51,8 @@ var AppRecorder = (function () {
         if (stream) {
           stream.getTracks().forEach(function (t) { t.stop(); });
         }
-        resolve({ blob: audioBlob, url: audioUrl });
+        audioDurationSeconds = Math.max(1, Math.round((Date.now() - recordingStartedAt) / 1000));
+        resolve({ blob: audioBlob, url: audioUrl, durationSeconds: audioDurationSeconds, mimeType: type });
       };
       mediaRecorder.stop();
     });
@@ -57,15 +62,29 @@ var AppRecorder = (function () {
     return audioUrl;
   }
 
+  function getAudioBlob() {
+    return audioBlob;
+  }
+
+  function getAudioDurationSeconds() {
+    return audioDurationSeconds;
+  }
+
   function isRecording() {
     return mediaRecorder && mediaRecorder.state === 'recording';
   }
 
   function cleanup() {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      try { mediaRecorder.stop(); } catch (e) {}
+    }
+    mediaRecorder = null;
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     audioUrl = null;
     audioBlob = null;
     audioChunks = [];
+    recordingStartedAt = 0;
+    audioDurationSeconds = 0;
     if (stream) {
       stream.getTracks().forEach(function (t) { t.stop(); });
       stream = null;
@@ -77,6 +96,8 @@ var AppRecorder = (function () {
     start: start,
     stop: stop,
     getAudioUrl: getAudioUrl,
+    getAudioBlob: getAudioBlob,
+    getAudioDurationSeconds: getAudioDurationSeconds,
     isRecording: isRecording,
     cleanup: cleanup
   };
