@@ -15,12 +15,15 @@ var PageGuide = (function () {
           guideModule('🎙️', '口语训练', '50 分钟', '分析提纲 → 浏览器录音 → 可选转写与内容评分 → 自评') +
           guideModule('📝', '每日测验', '20 分钟', '指标、SQL、漏斗、实验和数据质量混合题') +
         '</div>') +
+      section('🤖 AI 评分与录音转写',
+        '<p>如果你通过 GitHub Pages 打开本网页，听力训练、案例练习、录音回放、测验和人工自评都可以直接使用。</p>' +
+        '<ul class="guide-list"><li>AI 评分和录音转写需要后台 AI 服务在线；网页显示“AI 服务已就绪”后，相关按钮才可以使用。</li><li>口语训练可以先录音和回听；点击“转写并由 AI 评分”后，录音才会发送到后台进行转写和内容评分。</li><li>如果显示“AI 服务未连接”“AI 服务地址错误”或“尚未配置”，仍可继续录音、回放和人工自评；请稍后重试或联系管理员。</li><li>录音需要使用 Chrome 或 Edge，并允许网页访问麦克风。</li></ul>') +
       section('🗺️ 第三步：推荐学习顺序',
         '<ul class="guide-list"><li><strong>课程总览</strong>：先看 14 天能力地图，点击任意天开始。</li><li><strong>今日训练</strong>：按听力 → 案例分析 → 口语 → 测验完成当天闭环。</li><li><strong>案例分析</strong>：先定义 grain、口径和限制，再写方法与建议。</li><li><strong>进度看板</strong>：查看模块得分、连续学习天数和错题记录。</li><li><strong>我的素材</strong>：保存自己的项目案例、分析框架和英文表达。</li></ul>') +
       section('💡 面试分析习惯',
         '<ul class="guide-list"><li>先确认业务目标与指标分母，再开始计算。</li><li>解释 SQL 时先说每张表的 grain，再说 join 和去重。</li><li>实验结论同时说明效果量、不确定性、SRM 和 guardrail。</li><li>汇报遵循结论 → 证据 → 风险 → 建议 → 下一步。</li></ul>') +
       section('💾 数据说明',
-        '<ul class="guide-list"><li>学习进度和 AI 评分结果保存在本机浏览器；只有主动点击 AI 按钮后，案例答案才会发送给 DeepSeek，口语录音才会发送给 GLM 转写并由 DeepSeek 评分。</li><li>AI 评分未配置、网络失败或不愿发送内容时，人工自评仍可用。</li><li>口语 AI 只根据 transcript 评估内容，不是发音、口音、语调或自信度测评。</li><li>导出备份包含应用身份和版本号，其他版本的文件会被拒绝导入。</li><li>页面中的业务公司、金额、订单量和实验结果均为 synthetic / 模拟数据。</li><li>建议在完成重要练习后到「设置」导出 JSON 备份。</li></ul>') +
+        '<ul class="guide-list"><li>学习进度和 AI 评分结果保存在本机浏览器；只有主动点击 AI 按钮后，案例答案才会发送给 DeepSeek，口语录音才会发送给 GLM 转写并由 DeepSeek 评分。</li><li>AI 服务未连接、未配置、网络失败或你不愿发送内容时，人工自评仍可用。</li><li>口语 AI 只根据 transcript 评估内容，不是发音、口音、语调或自信度测评。</li><li>导出备份包含应用身份和版本号，其他版本的文件会被拒绝导入。</li><li>页面中的业务公司、金额、订单量和实验结果均为 synthetic / 模拟数据。</li><li>建议在完成重要练习后到「设置」导出 JSON 备份。</li></ul>') +
       '<div class="guide-start-btn-wrap"><button class="btn btn-primary btn-large" onclick="App.navigate(\'overview\')">📅 查看课程总览，开始学习 →</button></div>' +
     '</div>';
   }

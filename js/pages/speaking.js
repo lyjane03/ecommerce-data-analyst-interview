@@ -48,13 +48,13 @@ var PageSpeaking = (function () {
   function renderRecord(S) {
     var status = AppAIScoring.getStatus();
     var canScore = !!state.audioBlob && state.aiStatus !== 'loading' && !(status.checked && !status.speakingConfigured);
-    return '<div class="record-section"><div class="instruction-box"><strong>录音说明：</strong>点击“开始录音”，按提纲完整汇报一遍。录完后可回听；只有点击 AI 按钮时才会上传本次录音。</div>' +
+    return '<div class="record-section"><div class="instruction-box"><strong>录音说明：</strong>点击“开始录音”，按提纲完整汇报一遍。录完后可回听；只有点击 AI 按钮时才会上传本次录音。若 AI 服务未连接，仍可继续录音、回放和人工自评。</div>' +
       '<div class="record-center"><div class="record-btn-wrap"><button class="btn-record ' + (state.isRecording ? 'recording' : '') + '" id="recordBtn" onclick="PageSpeaking.toggleRecord()">' + (state.isRecording ? '■ 停止录音' : '● 开始录音') + '</button>' + (state.isRecording ? '<div class="recording-indicator"><span class="rec-dot"></span> 录制中...</div>' : '') + '</div>' + (state.audioUrl ? '<div class="playback-area"><div class="playback-title">录音回放：</div><audio controls src="' + state.audioUrl + '" class="audio-player"></audio><div class="playback-tips">回听时注意：发音是否清晰？逻辑是否流畅？关键词是否都用到了？</div></div>' : '') + '</div>' +
       '<div class="record-outline-mini"><div class="mini-title">提纲速览：</div>' + S.outline.map(function (item) { return '<div class="mini-point">• ' + escapeHtml(item.point) + '</div>'; }).join('') + '</div>' +
       (!AppRecorder.isSupported() ? '<div class="warn-box">⚠️ 浏览器不支持录音功能。请使用 Chrome 或 Edge 浏览器。</div>' : '') +
       (state.transcript ? renderTranscript() : '') +
       (state.aiError ? '<div class="ai-error">' + escapeHtml(state.aiError.message) + (state.aiError.retryable ? ' 可重试。' : '') + '</div>' : '') +
-      '<div class="ai-disclosure"><strong>AI 内容评分：</strong>点击后，录音会由本机转换格式并发送给 GLM 转写，所得文字再发送给 DeepSeek 评分；不评发音、口音、语调或自信度。<span id="speaking-ai-status" class="ai-status ' + (status.speakingConfigured ? 'configured' : 'unconfigured') + '">' + escapeHtml(AppAIScoring.statusText('speaking')) + '</span></div>' +
+      '<div class="ai-disclosure"><strong>AI 内容评分：</strong>点击后，录音会发送给后台服务，由 GLM 转写，所得文字再发送给 DeepSeek 评分；不评发音、口音、语调或自信度。<span id="speaking-ai-status" class="ai-status ' + (status.speakingConfigured ? 'configured' : 'unconfigured') + '">' + escapeHtml(AppAIScoring.statusText('speaking')) + '</span></div>' +
       '<div class="action-row">' + (state.audioBlob ? '<button class="btn btn-primary btn-large" onclick="PageSpeaking.requestAIScore()" ' + (canScore ? '' : 'disabled') + '>' + (state.aiStatus === 'loading' ? '⏳ 转写和评分中…' : '🤖 转写并由 AI 评分') + '</button>' : '') + (state.audioUrl || state.transcript ? '<button class="btn btn-secondary" onclick="PageSpeaking.switchPhase(\'eval\')">进入自评 →</button>' : '') + '</div></div>';
   }
   function renderTranscript() {

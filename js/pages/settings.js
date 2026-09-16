@@ -123,9 +123,15 @@ var PageSettings = (function () {
       var el = document.getElementById('ai-config-status');
       if (!el) return;
       var status = AppAIScoring.getStatus();
+      if (!status.reachable) {
+        el.className = 'setting-info status-warn';
+        var reason = status.errorCode === 'AI_UNAVAILABLE' ? '当前打开方式不支持 AI' : (status.errorCode === 'AI_BACKEND_ENDPOINT_NOT_FOUND' ? 'AI 服务地址错误' : 'AI 服务未连接');
+        el.textContent = reason + '；录音、回放和人工自评仍可使用。';
+        return;
+      }
       el.className = 'setting-info ' + (status.scoringConfigured && status.transcriptionConfigured ? 'status-ok' : 'status-warn');
-      var scoring = status.scoringConfigured ? 'DeepSeek ✅ ' + status.scoringModel : 'DeepSeek ⚠️ 未配置';
-      var transcription = status.transcriptionConfigured ? 'GLM ✅ ' + status.transcribeModel : 'GLM ⚠️ 未配置';
+      var scoring = status.scoringConfigured ? 'DeepSeek ✅ ' + status.scoringModel : 'DeepSeek ⚠️ 尚未配置';
+      var transcription = status.transcriptionConfigured ? 'GLM ✅ ' + status.transcribeModel : 'GLM ⚠️ 尚未配置';
       el.textContent = scoring + '；' + transcription;
     });
   }

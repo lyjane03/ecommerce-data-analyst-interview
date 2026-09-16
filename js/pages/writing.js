@@ -51,7 +51,7 @@ var PageWriting = (function () {
     return '<div class="practice-section">' +
       '<div class="instruction-box"><strong>作答提示：</strong>先写结论，再说明指标口径、分析方法、限制条件和建议。建议 150–250 词。</div>' +
       '<div class="practice-editor"><label class="input-label">用英文写出你的分析结论：</label><textarea id="caseResponseEditor" class="email-textarea" rows="16" placeholder="Start with your recommendation..." oninput="PageWriting.handleResponseInput(this.value)">' + escapeHtml(state.response) + '</textarea><div class="word-count" id="caseWordCount">0 词 · 0 字符</div></div>' +
-      '<div class="ai-disclosure"><strong>AI 评分：</strong>点击后，本题答案会经本机服务发送给 DeepSeek；不点击不会自动发送。' +
+      '<div class="ai-disclosure"><strong>AI 评分：</strong>点击后，本题答案会发送给后台 AI 服务，再由 DeepSeek 评分；不点击不会自动发送。若显示“AI 服务未连接”，仍可继续人工自评。' +
         '<span id="writing-ai-status" class="ai-status ' + (status.configured ? 'configured' : 'unconfigured') + '">' + escapeHtml(AppAIScoring.statusText()) + '</span></div>' +
       (state.aiError ? '<div class="ai-error">' + escapeHtml(state.aiError.message) + (state.aiError.retryable ? ' 可重试。' : '') + '</div>' : '') +
       '<div class="action-row"><button class="btn btn-primary btn-large" onclick="PageWriting.requestAIScore()" ' + (disabled ? 'disabled' : '') + '>' + (state.aiStatus === 'loading' ? '⏳ AI 评分中…' : '🤖 AI 评分') + '</button><button class="btn btn-secondary" onclick="PageWriting.switchPhase(\'score\')">进入自评 →</button><button class="btn btn-secondary" onclick="PageWriting.toggleReference()">' + (state.showReference ? '隐藏参考答案' : '查看参考答案') + '</button><button class="btn btn-secondary" onclick="PageWriting.clearResponse()">清空</button></div>' +

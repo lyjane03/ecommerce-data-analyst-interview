@@ -1,5 +1,5 @@
 var AppAIScoring = (function () {
-  var status = { configured: null, scoringConfigured: null, transcriptionConfigured: null, speakingConfigured: null, scoringModel: '', transcribeModel: '', checked: false };
+  var status = { reachable: null, configured: null, scoringConfigured: null, transcriptionConfigured: null, speakingConfigured: null, scoringModel: '', transcribeModel: '', checked: false, errorCode: '', errorMessage: '' };
   var REQUEST_TIMEOUT_MS = 160000;
 
   function unavailable(message) {
@@ -19,8 +19,8 @@ var AppAIScoring = (function () {
       return response.json().catch(function () { return {}; }).then(function (body) {
         if (!response.ok) {
           var info = body.error || {};
-          var error = new Error(info.message || 'AI 请求失败，请稍后重试。');
-          error.code = info.code || 'AI_REQUEST_FAILED';
+          var error = new Error(info.message || (response.status === 404 ? 'AI 服务接口不存在，请检查后端服务地址。' : 'AI 请求失败，请稍后重试。'));
+          error.code = info.code || (response.status === 404 ? 'AI_BACKEND_ENDPOINT_NOT_FOUND' : 'AI_REQUEST_FAILED');
           error.retryable = !!info.retryable;
           throw error;
         }
@@ -31,6 +31,10 @@ var AppAIScoring = (function () {
         var timeout = new Error('AI 请求超时，请稍后重试。');
         timeout.code = 'AI_TIMEOUT'; timeout.retryable = true; throw timeout;
       }
+      if (error && error.name === 'TypeError') {
+        var connection = new Error('无法连接 AI 服务，请检查网络或联系管理员。');
+        connection.code = 'AI_BACKEND_UNREACHABLE'; connection.retryable = true; throw connection;
+      }
       throw error;
     }).finally(function () { if (timer) clearTimeout(timer); });
   }
@@ -40,6 +44,7 @@ var AppAIScoring = (function () {
       var scoringConfigured = data.scoringConfigured == null ? !!data.aiConfigured : !!data.scoringConfigured;
       var transcriptionConfigured = !!data.transcriptionConfigured;
       status = {
+        reachable: true,
         configured: scoringConfigured,
         scoringConfigured: scoringConfigured,
         transcriptionConfigured: transcriptionConfigured,
@@ -48,11 +53,13 @@ var AppAIScoring = (function () {
         transcribeModel: data.transcribeModel || '',
         aiProvider: data.aiProvider || '',
         transcribeProvider: data.transcribeProvider || '',
-        checked: true
+        checked: true,
+        errorCode: '',
+        errorMessage: ''
       };
       return status;
     }).catch(function (error) {
-      status = { configured: false, scoringConfigured: false, transcriptionConfigured: false, speakingConfigured: false, scoringModel: '', transcribeModel: '', checked: true, error: error };
+      status = { reachable: false, configured: false, scoringConfigured: false, transcriptionConfigured: false, speakingConfigured: false, scoringModel: '', transcribeModel: '', checked: true, errorCode: error.code || 'AI_BACKEND_UNREACHABLE', errorMessage: error.message || '无法连接 AI 服务。', error: error };
       return status;
     });
   }
@@ -77,13 +84,18 @@ var AppAIScoring = (function () {
   function getStatus() { return status; }
   function statusText(mode) {
     if (!status.checked) return '正在检查 AI 服务…';
-    if (mode === 'speaking') {
-      if (status.speakingConfigured) return 'GLM 转写 + DeepSeek 评分已配置';
-      if (!status.scoringConfigured && !status.transcriptionConfigured) return 'DeepSeek 与 GLM 均未配置 · 可继续人工自评';
-      if (!status.scoringConfigured) return 'DeepSeek 评分未配置 · 可继续人工自评';
-      return 'GLM 转写未配置 · 可继续人工自评';
+    if (!status.reachable) {
+      if (status.errorCode === 'AI_UNAVAILABLE') return '当前打开方式不支持 AI · 可继续人工自评';
+      if (status.errorCode === 'AI_BACKEND_ENDPOINT_NOT_FOUND') return 'AI 服务地址错误 · 可继续人工自评';
+      return 'AI 服务未连接 · 可继续人工自评';
     }
-    return status.scoringConfigured ? 'DeepSeek 已配置 · 点击后才会发送作答内容' : 'DeepSeek 未配置 · 可继续使用人工自评';
+    if (mode === 'speaking') {
+      if (status.speakingConfigured) return 'GLM 转写 + DeepSeek 评分已就绪';
+      if (!status.scoringConfigured && !status.transcriptionConfigured) return 'AI 服务已连接，但 DeepSeek 与 GLM 尚未配置 · 可继续人工自评';
+      if (!status.scoringConfigured) return 'AI 服务已连接，但 DeepSeek 尚未配置 · 可继续人工自评';
+      return 'AI 服务已连接，但 GLM 转写尚未配置 · 可继续人工自评';
+    }
+    return status.scoringConfigured ? 'DeepSeek 评分已就绪 · 点击后才会发送作答内容' : 'AI 服务已连接，但 DeepSeek 尚未配置 · 可继续人工自评';
   }
 
   return { health: health, scoreWriting: scoreWriting, scoreSpeaking: scoreSpeaking, getStatus: getStatus, statusText: statusText };
